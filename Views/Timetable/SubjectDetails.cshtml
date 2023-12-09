@@ -1,0 +1,56 @@
+﻿@model TimetableModel
+
+
+@using (Html.BeginForm("StudentTimeTable", "Timetable", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.HiddenFor(m=>m.TotalWorkingDays)
+            @Html.HiddenFor(m=>m.SubjectsPerDay)
+            @Html.HiddenFor(m=>m.TotalSubjects)
+            @Html.HiddenFor(m=>m.TotalHoursPerWeek)
+            <div>
+                @for (int i = 0; i < Model.TotalSubjects; i++)
+                {
+                    <div>
+                        @Html.LabelFor(model => model.Subjects[i].SubjectName)
+                        @Html.TextBoxFor(model => model.Subjects[i].SubjectName)
+                        @Html.ValidationMessageFor(m => m.Subjects[i].SubjectName,null, new { @class = "text-danger" })
+
+                        @Html.LabelFor(model => model.Subjects[i].TotalHours)
+                        @Html.TextBoxFor(model => model.Subjects[i].TotalHours)
+                        @Html.ValidationMessageFor(m => m.Subjects[i].TotalHours,null, new { @class = "text-danger" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="col-md-12 text-danger" id="validationMessage"></div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <input type="submit" class="btn btn-primary" value="Generate" onclick="return ValidateData();" />
+        </div>
+    </div>
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    function ValidateData() {
+        var totalWorkingDaysSum = 0;
+        $("input[name^='Subjects'][name$='TotalHours']").each(function () {
+            totalWorkingDaysSum += parseInt($(this).val()) || 0;
+        });
+
+        if (totalWorkingDaysSum !== parseInt($('#TotalHoursPerWeek').val()) || totalWorkingDaysSum === 0) {
+            $('#validationMessage').text("The sum of Total Hours should be equal to Total Hours Per Week and not be zero.");
+            return false;
+        } else {
+            $('#validationMessage').text(""); // Clear previous validation message
+        }
+
+        return true;
+    }
+</script>

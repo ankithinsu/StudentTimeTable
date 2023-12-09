@@ -1,0 +1,70 @@
+﻿@model TimetableModel
+
+<h2>Student Timetable</h2>
+
+@using (Html.BeginForm("SubjectDetails", "Timetable", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.TotalWorkingDays, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.TotalWorkingDays, new { @class = "form-control", @id = "txtNOofWorkingDays" })
+            @Html.ValidationMessageFor(m => m.TotalWorkingDays,null, new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.SubjectsPerDay, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.SubjectsPerDay, new { @class = "form-control", @id = "txtNOofSubjectPerDay" })
+            @Html.ValidationMessageFor(m => m.SubjectsPerDay,null, new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.TotalSubjects, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.TotalSubjects, new { @class = "form-control", @id = "txtTotalSubjects" })
+            @Html.ValidationMessageFor(m => m.TotalSubjects,null, new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.TotalHoursPerWeek, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.TotalHoursPerWeek, new { @class = "form-control", @id = "txtTotalHoursPerWeek", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.TotalHoursPerWeek,null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <input type="submit" class="btn btn-success" value="Calculate" onclick="return ValidateData();" />
+        </div>
+    </div>
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#txtNOofWorkingDays, #txtNOofSubjectPerDay').change(function () {
+            var totalWorkingDays = parseInt($('#txtNOofWorkingDays').val()) || 0;
+            var subjectsPerDay = parseInt($('#txtNOofSubjectPerDay').val()) || 0;
+
+            var totalHoursPerWeek = totalWorkingDays * subjectsPerDay;
+            $('#txtTotalHoursPerWeek').val(totalHoursPerWeek);
+        });
+    });
+
+    function ValidateData() {
+        if ($('#txtNOofWorkingDays').val() == '') {
+            alert('Please Enter No of Working Days.');
+            return false;
+        }
+        if ($('#txtNOofSubjectPerDay').val() == '') {
+            alert('Please Enter No of Subject per Days.');
+            return false;
+        }
+        if ($('#txtTotalSubjects').val() == '') {
+            alert('Please Enter Total Subjects.');
+            return false;
+        }
+        return true;
+    }
+</script>

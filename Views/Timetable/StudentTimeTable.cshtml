@@ -1,0 +1,23 @@
+﻿@model TimetableModel
+
+
+<table class="table table-bordered">
+    <tbody>
+        @for (int subject = 0; subject < Model.SubjectsPerDay; subject++)
+        {
+            <tr>
+                @for (int day = 0; day < Model.TotalWorkingDays; day++)
+                {
+                    <td>@Model.TimetableGrid[day][subject]?.SubjectName</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<br/>
+<br/>
+<div class="row">
+    <div class="col-md-12 text-center">
+        @Html.ActionLink("Go to Home", "Index", "Timetable", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
