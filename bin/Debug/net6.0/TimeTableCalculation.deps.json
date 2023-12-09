@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "TimeTableCalculation/1.0.0": {
+        "runtime": {
+          "TimeTableCalculation.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TimeTableCalculation/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
